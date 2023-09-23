@@ -30,6 +30,12 @@ function AdminLayout({ children }) {
       path: "/admin/bookings",
       icon: "ri-file-list-line",
     },
+
+    {
+      name: "Tour",
+      path: "/admin/AdminTour",
+      icon: "ri-file-list-line",
+    },
     {
       name: "Logout",
       path: "/logout",

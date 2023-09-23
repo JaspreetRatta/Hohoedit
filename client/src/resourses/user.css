@@ -3,16 +3,18 @@
 
 /* Styles for the top navigation bar */
 .user-topnav {
-  background-color: #333;
-  color: #fff;
+ 
+  color: #121010;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  
 }
 
 /* Styles for the user-logo */
 .user-logo {
+  color: #0c0c0c;
   font-size: 24px;
   font-weight: bold;
 }
@@ -40,9 +42,12 @@
 
 /* Styles for the active menu item */
 .user-active-menu-item {
-  background-color: #444;
+  background-color: #68d1fb;
 }
-
+.dark-mode {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
 /* Styles for the media query (to control responsiveness) */
 @media screen and (max-width: 768px) {
   /* Hide the user-logo on smaller screens when collapsed */

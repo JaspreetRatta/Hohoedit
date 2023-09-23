@@ -1,10 +1,8 @@
 
 import { Col, message, Row } from "antd";
 import axios from "axios";
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import Bus from "../components/Bus";
 import { axiosInstance } from "../helpers/axiosInstance";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";

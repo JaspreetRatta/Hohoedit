@@ -3,7 +3,7 @@ import { Row, Col } from "antd";
 import "../resourses/bus.css";
 import "../resourses/seat.png";
 import steerImg from "../resourses/steer.png";
-import seatImg from "../resourses/seat.png";
+
 
 function SeatSelection({ selectedSeats, setSelectedSeats, bus }) {
   const capacity = bus.capacity;

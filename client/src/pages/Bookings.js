@@ -1,9 +1,8 @@
 import { message, Modal, Table } from "antd";
-import axios from "axios";
+
 import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import BusForm from "../components/BusForm";
 import PageTitle from "../components/PageTitle";
 import { axiosInstance } from "../helpers/axiosInstance";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
@@ -13,6 +12,8 @@ import { useReactToPrint } from "react-to-print";
 function Bookings() {
   const [showPrintModal, setShowPrintModal] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
+
+
   const [bookings, setBookings] = useState([]);
   const dispatch = useDispatch();
   const getBookings = async () => {
@@ -20,13 +21,17 @@ function Bookings() {
       dispatch(ShowLoading());
       const response = await axiosInstance.post(
         "/api/bookings/get-bookings-by-user-id",
+        
+     
         {}
       );
+      
       dispatch(HideLoading());
       if (response.data.success) {
         const mappedData = response.data.data.map((booking) => {
           return {
             ...booking,
+          
             ...booking.bus,
             key: booking._id,
           };
@@ -47,11 +52,20 @@ function Bookings() {
       dataIndex: "name",
       key: "bus",
     },
+    
+  
     {
       title: "Bus Number",
       dataIndex: "number",
       key: "bus",
     },
+
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "users",
+    },
+
     {
       title: "Journey Date",
       dataIndex: "journeyDate",
@@ -99,6 +113,8 @@ function Bookings() {
       <PageTitle title="Bookings" />
       <div className="mt-2">
         <Table dataSource={bookings} columns={columns} />
+        
+        
       </div>
 
       {showPrintModal && (
@@ -119,7 +135,7 @@ function Bookings() {
             </p>
             <hr />
 
-            <p>User : {selectedBooking.name}</p>
+            <p>User : {selectedBooking.email}</p>
             <hr />
             <p>
               <span>Journey Date:</span>{" "}
@@ -131,12 +147,13 @@ function Bookings() {
             <hr />
             <p>
               <span>Seat Numbers:</span> <br />
-              {selectedBooking.seats}
+              {selectedBooking.seats.join(', ')}
             </p>
+
             <hr />
             <p>
               <span>Total Amount:</span>{" "}
-              {selectedBooking.fare * selectedBooking.seats.length} /-
+              {selectedBooking.fare * selectedBooking.seats.length} BHT
             </p>
           </div>
         </Modal>

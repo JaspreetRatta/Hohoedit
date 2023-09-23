@@ -44,11 +44,6 @@ function Bookings() {
 
 
   const columns = [
-    {
-      title: " UserName",
-      dataIndex: "name",
-      key: "User",
-    },
   
     {
       title: "Bus Name",

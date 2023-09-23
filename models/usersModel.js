@@ -22,9 +22,9 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    isprofilePicture: {
+    profilePic: {
       type: String,
-      default: 'default-profile-picture.jpg', // Set a default profile picture
+      default: "",
     },
   },
   {

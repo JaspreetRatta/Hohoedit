@@ -1,62 +1,94 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import './profile.css';
-function ProfilePage() {
-  const [profilePicture, setProfilePicture] = useState(null);
-  const [name, setName] = useState('');
-  // Add other profile fields as needed
+import { Col, message, Row } from "antd";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Tour from "../components/Tour";
+import { axiosInstance } from "../helpers/axiosInstance";
+import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 
-  const handlePictureUpload = (event) => {
-    const file = event.target.files[0];
-    setProfilePicture(file);
-  };
+function TourPage() {
+  const { user } = useSelector((state) => state.users);
+  const [searchQuery, setSearchQuery] = useState(""); // New state for search query
+  const dispatch = useDispatch();
+  const [tours, setTours] = useState([]);
 
-  const handleProfileUpdate = async (event) => {
-    event.preventDefault();
+  const getTours = async () => {
     try {
-      const formData = new FormData();
-      formData.append('profilePicture', profilePicture);
-      formData.append('name', name);
-      // Append other profile fields to the formData
-
-      await axios.post('/api/profile', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
+      dispatch(ShowLoading());
+      const response = await axios.post(
+        "/api/tour/get-all-tour",
+        {
+          // Include the search query in the request data
+          searchQuery: searchQuery,
         },
-      });
-      // Handle successful profile update
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      dispatch(HideLoading());
+      if (response.data.success) {
+        setTours(response.data.data);
+      } else {
+        message.error(response.data.message);
+      }
     } catch (error) {
-      // Handle error
+      dispatch(HideLoading());
+      message.error(error.message);
     }
   };
 
+  useEffect(() => {
+    getTours();
+  }, [searchQuery]); // Run getTours when the searchQuery changes
+
   return (
     <div>
-      <h2>Edit Profile</h2>
-      <form onSubmit={handleProfileUpdate}>
-        <div>
-          <label htmlFor="profilePicture">Profile Picture</label>
-          <input
-            type="file"
-            id="profilePicture"
-            accept="image/*"
-            onChange={handlePictureUpload}
-          />
-        </div>
-        <div>
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-          />
-        </div>
-        {/* Add other profile fields */}
-        <button type="update">Update Profile</button>
-      </form>
+      <div className="my-3 py-1">
+        <Row gutter={10} align="center">
+          <Col lg={12} sm={24}>
+            <div className="input-group">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search by Tour"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            
+           
+            </div>
+          </Col>
+          <Col lg={6} sm={24}>
+            <div className="d-flex gap-2">
+              <button className="primary-btn" onClick={() => getTours()}>
+                Filter
+              </button>
+              <button
+                className="outlined px-3"
+                onClick={() => setSearchQuery("")}
+              >
+                Clear
+              </button>
+            </div>
+          </Col>
+        </Row>
+      </div>
+      <div>
+        <Row gutter={[15, 15]}>
+          {tours
+            .filter((tour) => tour.status === "Upcoming")
+            .map((tour) => (
+              <Col lg={12} xs={24} sm={24} key={tour.id}>
+                <Tour tour={tour} />
+              </Col>
+            ))}
+        </Row>
+      </div>
     </div>
   );
 }
 
-export default ProfilePage;
+export default TourPage;
+

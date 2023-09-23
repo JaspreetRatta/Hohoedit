@@ -8,10 +8,18 @@ app.use(express.json());
 const usersRoute = require("./routes/usersRoute");
 const busesRoute = require("./routes/busesRoute");
 const bookingsRoute = require("./routes/bookingsRoute");
+const toursRoute = require("./routes/toursRoute");
+const memoriesRoute = require("./routes/memoriesRoute");
+
+
 
 app.use("/api/users", usersRoute);
 app.use("/api/buses", busesRoute);
 app.use("/api/bookings", bookingsRoute);
+app.use("/api/tour", toursRoute);
+app.use('/api/memories', memoriesRoute);
+
+
 const path = require("path");
 if(process.env.NODE_ENV === "production")
 {

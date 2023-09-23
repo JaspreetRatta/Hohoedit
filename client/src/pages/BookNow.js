@@ -72,10 +72,7 @@ function BookNow() {
     }
   };
 
-  const paypalPayment = () => {
-    // Implement PayPal payment logic here
-    console.log("Perform PayPal payment");
-  };
+ 
 
   useEffect(() => {
     getBus();
@@ -121,7 +118,7 @@ function BookNow() {
                   token={onToken}
                   amount={bus.fare * selectedSeats.length * 100}
                   currency="THB"
-                  stripeKey="pk_test_51IYnC0SIR2AbPxU0TMStZwFUoaDZle9yXVygpVIzg36LdpO8aSG8B9j2C0AikiQw2YyCI8n4faFYQI5uG3Nk5EGQ00lCfjXYvZ"
+                  stripeKey="pk_test_51No2dzLzyWTDvO4mFVgg15J7SyIsIhnmesOOyDf6RknBT7aD2yfQxRWVyYwSKDHWRT0wpHyKXuPdvghPK0DbR2Xg00d2jB7qjP"
                 >
                   <button
                     className={`primary-btn ${
@@ -134,15 +131,7 @@ function BookNow() {
                 </StripeCheckout>
 
               
-                <button
-                  className={`secondary-btn ${
-                    selectedSeats.length === 0 && "disabled-btn"
-                  }`}
-                  disabled={selectedSeats.length === 0}
-                  onClick={paypalPayment}
-                >
-                  Pay with PayPal
-                </button>
+               
               </div>
             </div>
           </Col>
