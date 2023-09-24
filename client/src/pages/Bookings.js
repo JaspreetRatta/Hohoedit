@@ -60,11 +60,6 @@ function Bookings() {
       key: "bus",
     },
 
-    {
-      title: "Email",
-      dataIndex: "email",
-      key: "users",
-    },
 
     {
       title: "Journey Date",

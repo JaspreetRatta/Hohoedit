@@ -3,7 +3,7 @@ const Memory = require("../models/memoryModel");
 const authMiddleware = require("../middlewares/authMiddleware");
 
 // add-memory
-router.post("/add-memory", authMiddleware, async (req, res) => {
+router.post("/add-memory", async (req, res) => {
   try {
     const newMemory = new Memory(req.body);
     await newMemory.save();
@@ -30,7 +30,7 @@ router.post("/update-memory", authMiddleware, async (req, res) => {
 });
 
 // delete-memory
-router.post("/delete-memory", authMiddleware, async (req, res) => {
+router.post("/delete-memory", async (req, res) => {
   try {
     await Memory.findByIdAndDelete(req.body._id);
     return res.status(200).send({
@@ -43,7 +43,7 @@ router.post("/delete-memory", authMiddleware, async (req, res) => {
 });
 
 // get-all-memories
-router.post("/get-all-memories", authMiddleware, async (req, res) => {
+router.get("/get-all-memories", async (req, res) => {
   try {
     const memories = await Memory.find(req.body);
     return res.status(200).send({
